@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+{% block body %}
+<div class="page-header">
+  <div class="jumbotron text-white">
+       <h1 class="display-3 font-weight-bold text-white mb-2">Comment</h1>
+       <p class="lead my-3">Edit or Delete.</p>
+       {% if post.author == current_user %}
+       <div>
+         <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('posts.update_post', post_id=post.id) }}">Update</a>
+         <a class="btn btn-danger btn-sm m-1" href="{{ url_for('posts.delete_post', post_id=post.id) }}">Delete</a>
+       </div>
+     {% endif %}
+   </div>
+</div>
+  <article class="media content-section">
+    <img class="rounded-circle article-img" width="100px" src="{{ url_for('static', filename='profile_pics/' + post.author.image_file) }}">
+    <div class="media-body">
+      <div class="article-metadata">
+        <a class="mr-2" href="{{ url_for('users.user_posts', username=post.author.username) }}">{{ post.author.username }}</a>
+        <small class="text-muted">{{ post.date_posted.strftime('%Y-%m-%d') }}</small>
+      </div>
+      <h2 class="article-title">{{ post.title }}</h2>
+      <p class="article-content">{{ post.content | safe}}</p>
+    </div>
+  </article>
+  {% endblock %}

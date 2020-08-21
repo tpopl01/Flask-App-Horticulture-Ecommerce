@@ -1,0 +1,42 @@
+{% extends 'layout.html' %} 
+{% block body %}
+<div class="page-header">
+  <div class="jumbotron text-white">
+       <h1 class="display-3 font-weight-bold text-white mb-2">Admin Categories</h1>
+       <p class="lead my-3">Add, Edit and Remove Categories.</p>
+       <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('admin.add_category') }}">Add Category</a>
+       <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('admin.admin_dashboard') }}">Dashboard</a>
+   </div>
+</div>
+<div class="row">
+{% for item in categories.items %}
+<div class="col-xl-3 col-md-6 mb-4">
+  <div class="card border-0 shadow">
+    <div class="card-body text-center">
+      <h2><a class="article-title">{{ item.category_name }}</a></h2>
+      <div class="card-text text-black-50">
+        <p class="article-content">{{ item.date_posted }}</p>
+        <div>
+          <a class="btn btn-danger btn-sm m-1" href="{{ url_for('admin.remove_category', category_id=item.id) }}">Delete Category</a>
+          <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('admin.update_category', category_id=item.id) }}">Edit Category</a>
+      </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endfor %}
+</div>
+<div class="pagination">
+{% for page_num in categories.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+  {% if page_num %}
+    {% if categories.page == page_num %}
+      <a class="btn btn-info mb-4" href="{{ url_for('main.home', page=page_num) }}">{{ page_num }}</a>
+    {% else %}
+      <a class="btn btn-outline-info mb-4" href="{{ url_for('home', page=page_num) }}">{{ page_num }}</a>
+    {% endif %}
+  {% else %}
+    ...
+  {% endif %}
+{% endfor %}
+</div>
+{% endblock %}

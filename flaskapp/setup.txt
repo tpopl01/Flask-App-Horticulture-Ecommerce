@@ -1,0 +1,33 @@
+To Create a database do:
+import sqlalchemy
+engine = sqlalchemy.create_engine('mysql://root:mysql@localhost/tutorial_app')
+engine.execute("CREATE DATABASE tutorial_app") #create db
+engine.execute("USE tutorial_app") # select new db
+
+if the database is already created do to edit it through terminal:
+engine = sqlalchemy.create_engine('mysql://root:mysql@localhost/tutorial_app') #pass changed from Smudge14
+
+To set databse tables through console do:
+
+E:/Users/Tim/Anaconda3/envs/Flask/python.exe
+from flaskapp import db, create_app
+app=create_app()
+db.create_all(app)
+or db.create_all()
+
+user: test1234, email:test1234@test1234
+user: test, email:test1234@test1234
+
+//create admin
+app.app_context().push()
+from flaskapp import bcrypt
+from flaskapp.models import User, Role
+role = Role(name='Admin')
+db.session.add(role)
+role = Role(name='User')
+db.session.add(role)
+hashed_password = bcrypt.generate_password_hash('admin_pass').decode('utf-8')
+user = User(email='admin@admin.com', username='admin', address1='admin', address2='admin', city='admin', country='admin', postcode='IG7', phone='0000111', password=hashed_password)
+user.roles.append(Role.query.filter(Role.name=='Admin').first())
+db.session.add(user)
+db.session.commit()

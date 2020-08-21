@@ -1,0 +1,157 @@
+{% extends "layout.html" %}
+{% block body %}
+<div class="page-header">
+    <div class="jumbotron text-white">
+         <h1 class="display-3 font-weight-bold text-white mb-2">{{ product.title }}</h1>
+         <p class="lead my-3">Price: £{{ product.sterling }}</p>
+         <p class="lead my-3">Discounted Price: £{{ product.discounted_sterling }}</p>
+     </div>
+  </div>
+
+  
+
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-6">
+            <div class="container">
+              {% for i in images %}
+                <div class="mySlides">
+                  <img src="{{ url_for('static', filename='product_pics/' + i.image_file) }}" style="width:100%">
+                </div>
+              {% endfor %}
+                <a class="prev" onclick="plusSlides(-1)">❮</a>
+                <a class="next" onclick="plusSlides(1)">❯</a>
+              
+                <div class="caption-container">
+                  <p id="caption"></p>
+                </div>
+                <div class="row">
+                  {% for i in range(0, count) %}
+                  <div class="column">
+                    <img class="demo cursor" src="{{ url_for('static', filename='product_pics/' + images[i].image_file) }}" style="width:100%" onclick="currentSlide('{{i}}')" alt="{{ images[i].alt }}">
+                  </div>
+                  {% endfor %}
+                </div>
+              </div>
+      </div>
+      <div class="col-sm-6">
+          <br>
+          <div class="content-section">
+        <h2>{{ product.title }}</h2>
+        {{ product.content  | safe}}
+        <p>Rating: {{ product.product_rating }}</p>
+        <p>Only {{ product.quantity }} left in stock.</p>
+        <br>
+        {% if current_user.is_authenticated %}
+            <form method="POST" action="">
+                {{ form.hidden_tag() }}
+                <fieldset class="form-group">
+                    <legend class="border-bottom mb-4">{{ legend }}</legend>
+                    <div class="form-group">
+                        {{ form1.quantity.label(class="form-control-label") }}
+                        {% if form1.quantity.errors %}
+                            {{ form1.quantity(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form1.quantity.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form1.quantity(class="form-control form-control-lg") }}
+                        {% endif %}
+                    </div>
+                </fieldset>
+                <div class="form-group">
+                    {{ form1.submit(class="btn btn-outline-info") }}
+                </div>
+            </form>
+        {% endif %}
+    </div>
+      </div>
+    </div>
+    <hr>
+    </div>
+    <br>
+    
+    <div class="content-section">
+    <h2>Comments</h2>
+    </div>
+    {% for post in posts.items %}
+    <hr>
+        <article class="media content-section">
+          <img class="rounded-circle article-img" width="100px" src="{{ url_for('static', filename='profile_pics/' + post.author.image_file) }}">
+          <div class="media-body">
+            <div class="article-metadata">
+              <a class="mr-2" href="{{ url_for('users.user_posts', username=post.author.username) }}">{{ post.author.username }}</a>
+              <small class="text-muted">{{ post.date_posted.strftime('%Y-%m-%d') }}</small>
+            </div>
+            <h2><a class="article-title" href="{{ url_for('posts.post', post_id=post.id) }}">{{ post.title }} </a></h2>
+            <p class="article-content">{{ post.content | safe}}</p>
+          </div>
+        </article>
+    {% endfor %}
+    {% for page_num in posts.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+      {% if page_num %}
+        {% if posts.page == page_num %}
+          <a class="btn btn-info mb-4" href="{{ url_for('products.product', product_id=product.id, posts=posts, title='Comments', form=form, legend='Comments', page=page_num) }}">{{ page_num }}</a>
+        {% else %}
+          <a class="btn btn-outline-info mb-4" href="{{ url_for('products.product', product_id=product.id, posts=posts, title='Comments', form=form, legend='Comments', page=page_num) }}">{{ page_num }}</a>
+        {% endif %}
+      {% else %}
+        ...
+      {% endif %}
+    {% endfor %}
+    <!-- Add Comment -->
+    <hr>
+    <div class="content-section">
+        <h2>New Comment</h2>
+        <form method="POST" action="">
+            {{ form.hidden_tag() }}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">{{ legend }}</legend>
+                <div class="form-group">
+                    {{ form.title.label(class="form-control-label") }}
+                    {% if form.title.errors %}
+                        {{ form.title(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.title.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.title(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    {{ form.content.label(class="form-control-label") }}
+                    {% if form.content.errors %}
+                        {{ form.content(class="form-control form-control-lg is-invalid", id="editor") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.content.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.content(class="form-control form-control-lg", id="editor") }}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    {{ form.rating.label(class="form-control-label") }}
+                    {% if form.rating.errors %}
+                        {{ form.rating(class="form-control form-control-lg is-invalid", id="editor") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.rating.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.rating(class="form-control form-control-lg", id="editor") }}
+                    {% endif %}
+                </div>
+            </fieldset>
+            <div class="form-group">
+                {{ form.submit(class="btn btn-outline-info") }}
+            </div>
+        </form>
+    </div>
+    {% endblock %}

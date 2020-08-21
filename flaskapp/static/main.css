@@ -1,0 +1,179 @@
+.container{
+    background: rgba(255, 255, 255, 1); 
+    padding-left: 0;
+    padding-right: 0;
+    max-width: 1540px;
+}
+
+.media-body{
+    padding:10px;
+}
+
+.content-section{
+    padding-left:5%;
+    padding-right:5%;
+    padding-bottom:5%;
+}
+
+.overflow{
+  height: 300px;
+  overflow: hidden;
+}
+
+.card-body{
+  height: 230px;
+  overflow: hidden;
+}
+
+a{
+    text-decoration: none;
+    color: black;
+}
+
+.sidenav{
+    text-align: center;
+    padding:3%;
+}
+
+img{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.row{
+    padding-left: 2%;
+    padding-right: 2%;
+}
+
+.pagination{
+    padding: 2%;
+}
+
+.background_cover{
+    display: table-cell;
+    background: rgba(70, 76, 82, 0.97); 
+    background-size: cover;
+    padding-top: 2%;
+    padding-bottom: 2%;
+    width: 100%;
+    
+}
+
+body, html {
+    height: 100%;
+  }
+
+.background_img{
+  display: table;
+  background: url('https://www.andbeyond.com/wp-content/uploads/sites/5/Amazon-Rain-Forest.jpg') no-repeat center center fixed;
+  background-size: cover;
+  height: 100%;
+  width: 100%;
+}
+
+.jumbotron {
+    background: rgba(52, 58, 64, 0.99); 
+    border-radius: 0px;
+    text-align: center;
+ }
+
+
+
+
+
+
+ * {
+    box-sizing: border-box;
+  }
+  
+  img {
+    vertical-align: middle;
+  }
+/* Position the image container (needed to position the left and right arrows) */
+.container {
+    position: relative;
+  }
+  
+  /* Hide the images by default */
+  .mySlides {
+    display: none;
+    max-height: 470px;
+    overflow: hidden;
+  }
+  
+  /* Add a pointer when hovering over the thumbnail images */
+  .cursor {
+    cursor: pointer;
+  }
+  
+  /* Next & previous buttons */
+  .prev,
+  .next {
+    cursor: pointer;
+    position: absolute;
+    top: 40%;
+    width: auto;
+    padding: 16px;
+    margin-top: -50px;
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+    border-radius: 0 3px 3px 0;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+  
+  /* Position the "next button" to the right */
+  .next {
+    right: 0;
+    border-radius: 3px 0 0 3px;
+  }
+  
+  /* On hover, add a black background color with a little bit see-through */
+  .prev:hover,
+  .next:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+  }
+  
+  /* Number text (1/3 etc) */
+  .numbertext {
+    color: #f2f2f2;
+    font-size: 12px;
+    padding: 8px 12px;
+    position: absolute;
+    top: 0;
+  }
+  
+  /* Container for image text */
+  .caption-container {
+    text-align: center;
+    background-color: #222;
+    padding: 2px 16px;
+    color: white;
+  }
+  
+  .row:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+  
+  /* Six columns side by side */
+  .column {
+    float: left;
+    width: 16.66%;
+  }
+  
+  /* Add a transparency effect for thumnbail images */
+  .demo {
+    opacity: 0.6;
+    max-height: 80px;
+    overflow: hidden;
+  }
+  
+  .active,
+  .demo:hover {
+    opacity: 1;
+  }
+

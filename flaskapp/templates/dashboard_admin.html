@@ -1,0 +1,61 @@
+{% extends 'layout.html' %} 
+{% block body %}
+<div class="page-header">
+  <div class="jumbotron text-white">
+       <h1 class="display-3 font-weight-bold text-white mb-2">Admin Products</h1>
+       <p class="lead my-3">Assign Categories. Add, Edit and Remove Products</p>
+       <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('admin.add_product') }}">Add Product</a>
+       <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('admin.categories') }}">Categories</a>
+   </div>
+</div>
+<div class="row">
+{% if products is not none %}
+{% for item in products.items %}
+<div class="col-xl-3 col-md-6 mb-4">
+  <div class="card border-0 shadow">
+    <div class="overflow">
+      {% if item.image_file %}
+      <img src="{{ url_for('static', filename='product_pics/' + item.image_file) }}"  class="card-img-top" alt="{{ item.alt }}">
+      {% else %}
+      <img src="{{ url_for('static', filename='product_pics/default.png') }}"  class="card-img-top" alt="...">
+      {% endif %}
+    </div>
+    <div class="card-body text-center">
+      <div>
+        <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('admin.update_product', product_id=item.id) }}">Update</a>
+        <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('admin.product_category', product_id=item.id) }}">Assign Category</a>
+        <a class="btn btn-danger btn-sm m-1" href="{{ url_for('admin.delete_product', product_id=item.id) }}">Delete</a>
+    </div>
+      <h2><a class="card-title mb-0" href="{{ url_for('products.product', product_id=item.id) }}">{{ item.title }}</a></h2>
+      <div class="card-text text-black-50">
+        <p>Price: £{{ item.discounted_sterling }}</p>
+        <p>Rating: {{ item.product_rating }}</p>
+        <p>Remaining: {{ item.quantity }}</p>
+
+      </div>
+    </div>
+  </div>
+</div>
+{% endfor %}
+{% else %}
+  <p>There are currently no products available.</p>
+{% endif %}
+</div>
+
+{% if products is not none %}
+    <div class="pagination">
+    {% for page_num in products.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+      {% if page_num %}
+        {% if products.page == page_num %}
+          <a class="btn btn-info mb-4" href="{{ url_for('admin.admin_dashboard', page=page_num) }}">{{ page_num }}</a>
+        {% else %}
+          <a class="btn btn-outline-info mb-4" href="{{ url_for('admin.admin_dashboard', page=page_num) }}">{{ page_num }}</a>
+        {% endif %}
+      {% else %}
+        ...
+      {% endif %}
+    {% endfor %}
+    </div>
+  {% endif %}
+
+{% endblock %}
